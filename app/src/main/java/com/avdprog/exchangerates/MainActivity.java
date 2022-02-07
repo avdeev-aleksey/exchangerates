@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             double result = Double.parseDouble(String.valueOf(editTextNumberDecimal.getText())) * Double.parseDouble(res.get(index).getNominal()) / Double.parseDouble(res.get(index).getValue());
-            return String.format("%.4f", result);
+            return "RUB= "+String.format("%.4f", result);
         } else return "";
     }
 
