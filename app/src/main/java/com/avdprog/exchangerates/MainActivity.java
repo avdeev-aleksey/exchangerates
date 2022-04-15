@@ -1,8 +1,11 @@
 package com.avdprog.exchangerates;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.KeyEvent;
@@ -30,6 +33,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE = "";
     private ListView listValute;
     private ArrayAdapter<String> adapter;
     private String[] valutes;
@@ -67,6 +71,23 @@ public class MainActivity extends AppCompatActivity {
             // файл есть - используем его данные
             updateListViewData(jsonFromFile);
         }
+
+        //слушатель нажатия на элемент списка
+        listValute.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
+                                    long id) {
+                TextView textView = (TextView) itemClicked;
+                String strText = textView.getText().toString(); // получаем текст нажатого элемента
+
+
+                Intent intent = new Intent(MainActivity.this, Detail.class);
+
+                intent.putExtra(EXTRA_MESSAGE, strText);
+                startActivity(intent);
+
+            }
+        });
 
 
         result = findViewById(R.id.result);
@@ -264,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             double result = Double.parseDouble(String.valueOf(editTextNumberDecimal.getText())) * Double.parseDouble(res.get(index).getNominal()) / Double.parseDouble(res.get(index).getValue());
-            return "RUB= "+String.format("%.4f", result);
+            return "RUB= " + String.format("%.4f", result);
         } else return "";
     }
 
